@@ -1,93 +1,118 @@
 const express = require('express');
 const router = express.Router();
-const Customer = require('../models/Customers');
+const actions = require('../actions/customer');
 
-// Get customer info from database
-router.get ('/', async(req, res) => {
-  const Id = req.body.data.customerID;
-  let response = await getCustomerInfo(Id);
-  res.send(JSON.stringify(response));
+/**
+ * @api {get} /customer/:customerID? Request single or multiple customer information
+ * @apiName GetCustomer
+ * @apiGroup Customers
+ * 
+ * @apiParam {Int} customerID Customer's unique ID.
+ * 
+ * @apiSuccess {object[]} array of Customer information objects
+ * 
+ * @apiSuccessExample Response:
+ *     [
+ *      {
+ *        "CustomerID": "ALFKI",
+ *         "CompanyName": "Alfreds Futterkiste",
+ *         "ContactName": "Maria Anders",
+ *         "ContactTitle": "Sales Representative",
+ *         "Address": "Obere Str. 57",
+ *         "City": "Berlin",
+ *         "Region": null,
+ *         "PostalCode": "12209",
+ *         "Country": "Germany",
+ *         "Phone": "030-0074321",
+ *         "Fax": "030-0076545"
+ *      }
+*      ]
+ */
+router.get ('/:customerID?', async(req, res) => {
+  const Id = req.params.customerID;
+  console.log(Id);
+  let result = await actions.getCustomerInfo(Id);
+  res.send(result);
 });
 
 
 
-// Insert new customer into databse
+/**
+ * @api {post} /customer/add_customer Add a new Customer
+ * @apiName AddCustomer
+ * @apiGroup Customers
+ * 
+ * @apiParam {Int} customerID Customer's unique ID
+ * @apiParam {String} CompanyName Customer's company name
+ * @apiParam {String} ContactName Customer's contact name
+ * @apiParam {String} ContactTitle Customer's contact title
+ * @apiParam {String} Address Customer's address
+ * @apiParam {String} City Customer's city
+ * @apiParam {String} Region Customer's region
+ * @apiParam {String} PostalCode Customer's postal code
+ * @apiParam {String} Country Customer's country
+ * @apiParam {String} Phone Customer's phone number
+ * @apiParam {String} Fax Customer's fax number
+ * 
+ * @apiSuccess {object[]} array of Customer information object
+ * 
+ * @apiSuccessExample Response:
+ *     [
+ *      {
+ *        "CustomerID": "ALFKI",
+ *         "CompanyName": "Alfreds Futterkiste",
+ *         "ContactName": "Maria Anders",
+ *         "ContactTitle": "Sales Representative",
+ *         "Address": "Obere Str. 57",
+ *         "City": "Berlin",
+ *         "Region": null,
+ *         "PostalCode": "12209",
+ *         "Country": "Germany",
+ *         "Phone": "030-0074321",
+ *         "Fax": "030-0076545"
+ *      }
+*      ]
+ */
 router.post ('/add_customer', async (req, res) => {
-  console.log(req.body.data);
-  const data = req.body.data;
-  const response = await addCustomer(data);
-  res.sendStatus(200);
+  const data = req.body;
+  const result = await actions.addCustomer(data);
+  res.send(result);
 });
 
 
 
-// Update customer info
+/**
+ * @api {patch} /customer/update_customer_info Change information for an existing customer
+ * @apiName UpdateCustomer
+ * @apiGroup Customers
+ * 
+ * @apiParam {Int} customerID Customer's unique ID.
+ * @apiParam {object} fields information about the fields to be changed.
+ * 
+ * @apiSuccess {object[]} array of Customer information objects
+ * 
+ * @apiSuccessExample Response:
+ *     [
+ *      {
+ *        "CustomerID": "ALFKI",
+ *         "CompanyName": "Alfreds Futterkiste",
+ *         "ContactName": "Maria Anders",
+ *         "ContactTitle": "Sales Representative",
+ *         "Address": "Obere Str. 57",
+ *         "City": "Berlin",
+ *         "Region": null,
+ *         "PostalCode": "12209",
+ *         "Country": "Germany",
+ *         "Phone": "030-0074321",
+ *         "Fax": "030-0076545"
+ *      }
+*      ]
+ */
 router.patch ('/update_customer_info', async (req, res) => {
-  const data = req.body.data;
-  const response = await updateCustomerInfo(data);
-  if (response){
-    console.log(response);
-    res.sendStatus(200);
-  }
+  const data = req.body;
+  const result = await actions.updateCustomerInfo(data);
+  res.send(result);
 });
 
-
-
-
-
-
-
-const getCustomerInfo = async (customerID) => {
-  let customer =  await Customer.findAll({
-    where: {
-      CustomerID: customerID
-    }
-  }).catch((err) => console.log(err));
-  return customer;
-};
-
-const addCustomer = async (data) => {
-  let { 
-    customerID,
-    companyName,
-    contactName,
-    contactTitle,
-    address,
-    city,
-    region,
-    postalCode,
-    country,
-    phone,
-    fax
-  } = data;
-
-  const response = await Customer.create ({
-    CustomerID: customerID,
-    CompanyName: companyName,
-    ContactName: contactName,
-    ContactTitle: contactTitle,
-    Address: address,
-    City: city,
-    Region: region,
-    PostalCode: postalCode,
-    Country: country,
-    Phone: phone,
-    Fax: fax
-  }).catch(err => console.log(err));
-  console.log(response);
-  return response
-};
-
-const updateCustomerInfo = async (data) => {
-  let { fields, customerID} = data;
-  const response = await Customer.update (
-    fields,
-    {
-      where: {
-        CustomerID: customerID
-      }
-  });
-  return response;
-};
 
 module.exports = router;
