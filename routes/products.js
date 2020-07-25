@@ -47,7 +47,6 @@ router.get ('/:productID?', async(req, res) => {
  * @apiName AddProduct
  * @apiGroup Products
  * 
- * @apiParam {Int} productID Product's unique id
  * @apiParam {String} ProductName Product's name
  * @apiParam {Int} SupplierID Product supplier's id
  * @apiParam {Int} CategoryID Product category's id

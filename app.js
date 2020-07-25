@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const database = require('./config/database');
 const customers = require('./routes/customers');
 const products = require('./routes/products');
-const orders = require('./routes/orders');
 const orderHistory = require('./routes/orderHistory');
 
 const app = express();
@@ -28,7 +27,6 @@ app.get('/', (req, res) => {
 // Routes
 app.use('/customer', customers);
 app.use('/product', products);
-app.use('/order', orders);
 app.use('/order_history', orderHistory);
 
 

@@ -1,76 +1,97 @@
 const Customer = require('../models/Customers');
 const { create } = require('../models/Customers');
 const Customers = require('../models/Customers');
+const { CustomerSchema } = require('../helper/validation_schema');
 
 const getCustomerInfo = async (customerID) => {
-  let query = {};
-  if (customerID) {
-    if(!isNaN(customerID)){
-      return "Invalid customerID";
+  try
+  {
+    let query = {};
+    if (customerID) {
+      if(!isNaN(customerID)){
+        return "Invalid customerID";
+      }
+      query.where = { CustomerID: customerID };
     }
-    query.where = { CustomerID: customerID };
-  }
-  const response =  await Customer.findAll(query).catch((err) => {throw err});
+    const response =  await Customer.findAll(query);
 
-  if(response.length > 0) {
-    return JSON.stringify(response);
-  } else {
-    return "Sorry no customer found";
+    if(response.length > 0) {
+      return JSON.stringify(response);
+    } else {
+      return "Sorry no customer found";
+    }
+  } catch (error) {
+    return error;
   }
 };
 
 const addCustomer = async (data) => {
-  let { 
-    customerID,
-    companyName,
-    contactName,
-    contactTitle,
-    address,
-    city,
-    region,
-    postalCode,
-    country,
-    phone,
-    fax
-  } = data;
+  try
+  {
+    const result = await CustomerSchema.validateAsync(data);
 
-  const createObj = {
-    CustomerID: customerID,
-    CompanyName: companyName,
-    ContactName: contactName,
-    ContactTitle: contactTitle,
-    Address: address,
-    City: city,
-    Region: region,
-    PostalCode: postalCode,
-    Country: country,
-    Phone: phone,
-    Fax: fax
+    let { 
+      customerID,
+      companyName,
+      contactName,
+      contactTitle,
+      address,
+      city,
+      region,
+      postalCode,
+      country,
+      phone,
+      fax
+    } = result;
+
+    const customerObj = {
+      CustomerID: customerID,
+      CompanyName: companyName,
+      ContactName: contactName,
+      ContactTitle: contactTitle,
+      Address: address,
+      City: city,
+      Region: region,
+      PostalCode: postalCode,
+      Country: country,
+      Phone: phone,
+      Fax: fax
+    }
+
+    const response = await Customer.create (customerObj);    
+    return JSON.stringify(response);
+  } catch (error) {
+    if (error.isJoi) {
+      return error.message;
+    }
+    return error;
   }
-
-  const response = await Customer.create (createObj).catch(err => {throw err});
-  return JSON.stringify(response);
 };
 
 const updateCustomerInfo = async (data) => {
-  let { fields, customerID } = data;
-  const res = await Customer.update (
-    fields,
-    {
-      where: {
-        CustomerID: customerID
-      }
-  }).catch (err => {throw err});
+  try
+  {
+    let { fields, customerID } = data;
+    const res = await Customer.update (
+      fields,
+      {
+        where: {
+          CustomerID: customerID
+        }
+    });
 
-  if (res[0]) {
-    const response = await Customers.findOne({
-      where: {
-        CustomerID: customerID
-      }
-    }).catch(err => {throw err});
-    return JSON.stringify(response);
-  } else {
-    return "Nothing to update";
+    if (res[0]) {
+      const response = await Customers.findOne({
+        where: {
+          CustomerID: customerID
+        }
+      });
+      return JSON.stringify(response);
+    } else {
+      return "Nothing to update";
+    }
+  } catch (error) {
+    return error;
   }
 };
 
