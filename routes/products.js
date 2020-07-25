@@ -55,7 +55,7 @@ router.get ('/:productID?', async(req, res) => {
  * @apiParam {Int} UnitsInStock Quantity of product in stock
  * @apiParam {Int} UnitsOnOrder Quantity of product in order
  * @apiParam {Int} ReorderLevel Quantity of product in reorderorder
- * @apiParam {Int} Discontinued Is the product available
+ * @apiParam {Bit} Discontinued Is the product available (0, 1)
  * 
  * @apiSuccess {object[]} array of Products information objects
  * 

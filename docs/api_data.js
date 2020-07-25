@@ -315,10 +315,10 @@ define({ "api": [
           },
           {
             "group": "Parameter",
-            "type": "Int",
+            "type": "Bit",
             "optional": false,
             "field": "Discontinued",
-            "description": "<p>Is the product available</p>"
+            "description": "<p>Is the product available (0, 1)</p>"
           }
         ]
       }
