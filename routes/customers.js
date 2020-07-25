@@ -7,7 +7,7 @@ const actions = require('../actions/customer');
  * @apiName GetCustomer
  * @apiGroup Customers
  * 
- * @apiParam {Int} customerID Customer's unique ID.
+ * @apiParam {String} customerID Customer's unique ID.
  * 
  * @apiSuccess {object[]} array of Customer information objects
  * 
@@ -42,7 +42,7 @@ router.get ('/:customerID?', async(req, res) => {
  * @apiName AddCustomer
  * @apiGroup Customers
  * 
- * @apiParam {Int} customerID Customer's unique ID
+ * @apiParam {String} customerID Customer's unique ID
  * @apiParam {String} CompanyName Customer's company name
  * @apiParam {String} ContactName Customer's contact name
  * @apiParam {String} ContactTitle Customer's contact title
@@ -86,7 +86,7 @@ router.post ('/add_customer', async (req, res) => {
  * @apiName UpdateCustomer
  * @apiGroup Customers
  * 
- * @apiParam {Int} customerID Customer's unique ID.
+ * @apiParam {String} customerID Customer's unique ID.
  * @apiParam {object} fields information about the fields to be changed.
  * 
  * @apiSuccess {object[]} array of Customer information objects

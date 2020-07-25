@@ -4,12 +4,12 @@ const getOrderHistoryList = require('../actions/orderHistory');
 
 
 /**
- * @api {get} /order_history/:orderID? Get order history information for a customer
+ * @api {get} /order_history/customerID Get order history information for a customer
  * 
  * @apiName OrderHistory
  * @apiGroup OrdersHistory
  * 
- * @apiParam {Int} orderID Orders's unique id
+ * @apiParam {String} customerID Customer's unique id
  * 
  * @apiSuccess {object[]} Array of orders information objects
  * 
