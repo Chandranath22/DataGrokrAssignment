@@ -3,10 +3,18 @@ const Product = require('../models/Products');
 const getProductInfo = async (productID) => {
   let query = {};
   if (productID) {
+    if(isNaN(productID)){
+      return "Invalid productID";
+    }
     query.where = { ProductID: productID };
   }
-  let product =  await Product.findAll(query).catch((err) => {throw err});
-  return JSON.stringify(product);
+  const response =  await Product.findAll(query).catch((err) => {throw err});
+
+  if(response.length > 0) {
+    return JSON.stringify(response);
+  } else {
+    return "Sorry no products found";
+  }
 };
 
 
@@ -37,8 +45,7 @@ const addProduct = async (data) => {
   }
 
   const response = await Product.create (createObj).catch(err => {throw err});
-  console.log(response);
-  return JSON.stringify(response)
+  return JSON.stringify(response);
 };
 
 

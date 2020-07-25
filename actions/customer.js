@@ -5,13 +5,18 @@ const Customers = require('../models/Customers');
 const getCustomerInfo = async (customerID) => {
   let query = {};
   if (customerID) {
+    if(!isNaN(customerID)){
+      return "Invalid customerID";
+    }
     query.where = { CustomerID: customerID };
   }
+  const response =  await Customer.findAll(query).catch((err) => {throw err});
 
-  let customer =  await Customer.findAll(query)
-  .catch((err) => {throw err});
-
-  return JSON.stringify(customer);
+  if(response.length > 0) {
+    return JSON.stringify(response);
+  } else {
+    return "Sorry no customer found";
+  }
 };
 
 const addCustomer = async (data) => {

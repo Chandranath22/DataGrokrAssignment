@@ -4,7 +4,7 @@ const getOrderHistoryList = require('../actions/orderHistory');
 
 
 /**
- * @api {get} /product/:orderID? Get order history information for a customer
+ * @api {get} /order_history/:orderID? Get order history information for a customer
  * 
  * @apiName OrderHistory
  * @apiGroup OrdersHistory
@@ -174,7 +174,7 @@ const getOrderHistoryList = require('../actions/orderHistory');
  *               ],
  *               "totalAmount": "6385.10"
  *           }
- *    ]   
+ *        ]   
 */
 
 router.get ('/', async (req, res) => {

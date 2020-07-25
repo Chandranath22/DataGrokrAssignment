@@ -3,11 +3,17 @@ const Orders = require('../models/Orders');
 const getOrderInfo = async (orderID) => {
   let query = {};
   if (orderID) {
+    if(isNaN(orderID)){
+      return "Invalid orderID";
+    } 
     query.where = { OrderID: orderID };
   }
   const response = await Orders.findAll(query).catch (err => {throw err});
-
-  return JSON.stringify(response);
+  if(response.length > 0) {
+    return JSON.stringify(response);
+  } else {
+    return "Sorry no orders found";
+  }
 };
 
 
@@ -42,8 +48,7 @@ const placeOrder = async (data) => {
     ShipCountry: shipCountry
   }
 
-  const response = Orders.create(createObj).catch (err => {throw err});
-
+  const response = await Orders.create(createObj).catch (err => {throw err});
   return JSON.stringify(response);
 };
 

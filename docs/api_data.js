@@ -207,7 +207,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/product/:orderID?",
+    "url": "/order/:orderID?",
     "title": "Request order(s) information",
     "name": "GetOrder",
     "group": "Orders",
@@ -250,7 +250,7 @@ define({ "api": [
   },
   {
     "type": "get",
-    "url": "/product/:orderID?",
+    "url": "/order_history/:orderID?",
     "title": "Get order history information for a customer",
     "name": "OrderHistory",
     "group": "OrdersHistory",
@@ -293,7 +293,7 @@ define({ "api": [
   },
   {
     "type": "post",
-    "url": "/product/place_order",
+    "url": "/order/place_order",
     "title": "Place a new order",
     "name": "PlaceOrder",
     "group": "Orders",
@@ -420,7 +420,7 @@ define({ "api": [
   },
   {
     "type": "patch",
-    "url": "/product/update_order",
+    "url": "/order/update_order",
     "title": "Change information for an existing order",
     "name": "UpdateOrder",
     "group": "Orders",

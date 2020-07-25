@@ -4,7 +4,7 @@ const actions = require('../actions/order');
 
 
 /**
- * @api {get} /product/:orderID? Request order(s) information
+ * @api {get} /order/:orderID? Request order(s) information
  * 
  * @apiName GetOrder
  * @apiGroup Orders
@@ -42,7 +42,7 @@ router.get ('/:orderID?', async (req, res) => {
 
 
 /**
- * @api {post} /product/place_order Place a new order
+ * @api {post} /order/place_order Place a new order
  * 
  * @apiName PlaceOrder
  * @apiGroup Orders
@@ -92,7 +92,7 @@ router.post ('/place_order', async (req, res) => {
 
 
 /**
- * @api {patch} /product/update_order Change information for an existing order
+ * @api {patch} /order/update_order Change information for an existing order
  * 
  * @apiName UpdateOrder
  * @apiGroup Orders

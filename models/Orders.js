@@ -5,7 +5,8 @@ const Orders = database.define ('Orders', {
   OrderID: {
     type: DataTypes.INTEGER,
     primaryKey: true,
-    allowNull: false      
+    allowNull: false,
+    autoIncrement: true 
   },
   CustomerID: {
     type: DataTypes.STRING(5)
